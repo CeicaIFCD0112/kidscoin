@@ -11,12 +11,11 @@ $nombre = $_SESSION['nombres'];
 $apellido = $_SESSION['apellidos'];
 $saldo = $_SESSION['saldo'];
 
-$sql = "SELECT * FROM kidzpeople WHERE nombres = ? AND apellidos = ?";
+$sql = "SELECT * FROM usuarios WHERE nombres = ? AND apellidos = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $nombres, $apellidos,);
+$stmt->bind_param("ss", $nombre, $apellido);
 $stmt->execute();
 $result = $stmt->get_result();
-$usuario = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -86,29 +85,27 @@ $usuario = $result->fetch_assoc();
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Saldo</th>
-                    <th>QR</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
+                <?php while ($usuario = $result->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['nombres']); ?></td>
-                    <td><?php echo htmlspecialchars($row['apellidos']); ?></td>
-                    <td><?php echo htmlspecialchars($row['saldo']); ?></td>
-                    <td><img src="<?php echo htmlspecialchars($row['qr']); ?>" alt="QR Code" width="50"></td>
+                    <td><?php echo htmlspecialchars($usuario['nombres']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['apellidos']); ?></td>
+                    <td><?php echo htmlspecialchars($usuario['saldo']); ?></td>
                     <td>
                         <form action="update_balance.php" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <input type="hidden" name="id" value="<?php echo $usuario['id']; ?>">
                             <button type="submit" name="action" value="add" class="btn btn-success">+</button>
                         </form>
                         <form action="update_balance.php" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <input type="hidden" name="id" value="<?php echo $usuario['id']; ?>">
                             <button type="submit" name="action" value="subtract" class="btn btn-danger">-</button>
                         </form>
                     </td>
                 </tr>
-                <?php endwhile; ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>
