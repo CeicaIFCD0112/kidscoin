@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST[
     $action = $_POST['action'];
 
     // Fetch current balance
-    $sql = "SELECT saldo FROM usuarios WHERE id = ?";
+    $sql = "SELECT saldo FROM kidzpeople WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
