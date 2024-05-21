@@ -1,17 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION['nombres']) || !isset($_SESSION['apellidos'])) {
-    header("Location: login.php");
-    exit();
-};
+include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombres = $_POST['nombres'];
     $apellidos = $_POST['apellidos'];
+
     
-    $sql = "SELECT * FROM kidzpeople WHERE nombres = ? apellidos = ? saldo = ? AND qrcode = ?" ;
+    $sql = "SELECT * FROM usuarios WHERE nombres = ? AND apellidos = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $nombres, $apellidos, $saldo, $qrcode);
+    $stmt->bind_param("ss", $nombres, $apellidos,);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -19,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['id'] = $id;
         $_SESSION['nombres'] = $nombres;
         $_SESSION['apellidos'] = $apellidos;
+        $_SESSION['imagen'] = $imagen;
         $_SESSION['saldo'] = $saldo;
-        $_SESSION['qrcode'] = $qrcode;
         header("Location: dashboard.php");
         exit();
     } else {

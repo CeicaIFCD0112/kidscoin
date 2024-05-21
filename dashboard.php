@@ -9,6 +9,7 @@ include 'config.php';
 
 $nombre = $_SESSION['nombres'];
 $apellido = $_SESSION['apellidos'];
+$saldo = $_SESSION['saldo'];
 
 $sql = "SELECT * FROM kidzpeople WHERE nombres = ? AND apellidos = ?";
 $stmt = $conn->prepare($sql);

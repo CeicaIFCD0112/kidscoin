@@ -17,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST[
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $usuario = $result->fetch_assoc();
+    $kidzpeople = $result->fetch_assoc();
 
-    if ($usuario) {
-        $saldo_actual = $usuario['saldo'];
+    if ($kidzpeopleo) {
+        $saldo_actual = $kidzpeople['saldo'];
         if ($action == 'add') {
             $nuevo_saldo = $saldo_actual + 10; // Adjust the increment value as needed
         } elseif ($action == 'subtract') {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST[
         }
 
         // Update balance in the database
-        $sql = "UPDATE usuarios SET saldo = ? WHERE id = ?";
+        $sql = "UPDATE kidzpeople SET saldo = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $nuevo_saldo, $id);
         $stmt->execute();
